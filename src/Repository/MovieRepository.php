@@ -39,6 +39,17 @@ class MovieRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLatestMovies(int $max = 2): array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->setMaxResults($max)
+            ->orderBy('m.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Movie[] Returns an array of Movie objects
 //     */
