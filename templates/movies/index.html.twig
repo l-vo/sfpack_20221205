@@ -4,11 +4,11 @@
 
 {% block body %}
 <div class="example-wrapper">
-    <h1>{{ title }}</h1>
-    <img src="{{ asset('build/images/' ~ poster) }}" />
+    <h1>{{ movie.title }}</h1>
+    <img src="{{ asset('build/images/' ~ movie.poster) }}" />
     <ul>
-        <li><strong>Released at: </strong>{{ released_at|format_date('full') }}</li>
-        <li><strong>Genres: </strong>{{ genres|join(',') }}</li>
+        <li><strong>Released at: </strong>{{ movie.released|format_date('full') }}</li>
+        <li><strong>Genres: </strong> - </li>
     </ul>
 </div>
 {% endblock %}
