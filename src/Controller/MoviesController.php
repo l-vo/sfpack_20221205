@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MoviesController extends AbstractController
 {
     public const MOVIES = [
-        'le-torrent' => ['Le torrent', '2022-11-30', ['Thriller']],
-        'johnny-hallyday' => ['Johnny Hallyday', '2022-12-05', ['Concert']],
-        'days' => ['Days', '2022-11-30', ['Drama', 'Romance']]
+        'le-torrent' => ['Le torrent', '2022-11-30', ['Thriller'], 'torrent.jpg'],
+        'johnny-hallyday' => ['Johnny Hallyday', '2022-12-05', ['Concert'], 'johnny.jpg'],
+        'days' => ['Days', '2022-11-30', ['Drama', 'Romance'], 'days.jpg'],
     ];
 
     #[Route('/movies/{slug<[a-z0-9-]+>}', name: 'app_movies', methods: ['GET'])]
@@ -21,12 +21,13 @@ class MoviesController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        [$title, $releasedAt, $genres] = self::MOVIES[$slug];
+        [$title, $releasedAt, $genres, $poster] = self::MOVIES[$slug];
 
         return $this->render('movies/index.html.twig', [
             'title' => $title,
             'released_at' => $releasedAt,
             'genres' => $genres,
+            'poster' => $poster,
         ]);
     }
 }
