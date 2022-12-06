@@ -21,6 +21,7 @@ class MovieType extends AbstractType
             ->add('country')
             ->add('released', DateType::class, [
                 'widget' => 'single_text',
+                'input' => 'datetime_immutable',
             ])
             ->add('price', NumberType::class, [
                 'html5' => true,

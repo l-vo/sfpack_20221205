@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,10 +25,19 @@ class MoviesController extends AbstractController
         ]);
     }
 
-    #[Route('/movies/add', name: 'app_movies', methods: ['GET', 'POST'])]
-    public function addMovie(): Response
+    #[Route('/movies/add', name: 'app_movies_add', methods: ['GET', 'POST'])]
+    #[Route('/movies/edit/{slug}', name: 'app_movies_edit', methods: ['GET', 'POST'])]
+    public function addMovie(Request $request, MovieRepository $movieRepository, ?Movie $movie): Response
     {
-        $form = $this->createForm(MovieType::class);
+        $form = $this->createForm(MovieType::class, $movie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $movieRepository->save($form->getData(), true);
+
+            return $this->redirectToRoute('app_home');
+        }
 
         return $this->render('movies/add.html.twig', ['form' => $form]);
     }

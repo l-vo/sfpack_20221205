@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
+#[UniqueEntity('slug')]
 class Movie
 {
     #[ORM\Id]
@@ -17,24 +20,35 @@ class Movie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $poster = null;
 
     #[ORM\Column(length: 2)]
+    #[Assert\NotBlank]
+    #[Assert\Country]
     private ?string $country = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?\DateTimeImmutable $released = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 50)]
     private ?string $price = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Genre::class)]
+    #[Assert\Count(min: 1)]
     private Collection $genres;
 
     public function __construct()
