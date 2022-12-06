@@ -7,7 +7,7 @@
     <ul>
     {% for movie in movies %}
         <li>
-            <a href="{{ path('app_movies', {slug: movie.slug}) }}">{{ movie.title }}</a>
+            <a href="{{ path('app_movies', {slug: movie.slug}) }}">{{ movie.title }} ({{ movie.genreNames|join(', ') }})</a>
         </li>
     {% endfor %}
     </ul>

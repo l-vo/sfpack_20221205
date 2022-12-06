@@ -17,8 +17,8 @@ class MovieFixtures extends Fixture
         $movie->setPoster('torrent.jpg');
         $movie->setCountry('FR');
         $movie->setPrice('15.90');
+        $movie->addGenre($this->getReference('genre-thriller'));
         $manager->persist($movie);
-        //genres: Thriller
 
         $movie = new Movie();
         $movie->setSlug('johnny-hallyday');
@@ -27,8 +27,8 @@ class MovieFixtures extends Fixture
         $movie->setPoster('johnny.jpg');
         $movie->setCountry('FR');
         $movie->setPrice('17.90');
+        $movie->addGenre($this->getReference('genre-concert'));
         $manager->persist($movie);
-        //genres: Concert
 
         $movie = new Movie();
         $movie->setSlug('days');
@@ -37,8 +37,9 @@ class MovieFixtures extends Fixture
         $movie->setPoster('days.jpg');
         $movie->setCountry('FR');
         $movie->setPrice('13.90');
+        $movie->addGenre($this->getReference('genre-drama'));
+        $movie->addGenre($this->getReference('genre-romance'));
         $manager->persist($movie);
-        //genres: Drama, Romance
 
         $manager->flush();
     }

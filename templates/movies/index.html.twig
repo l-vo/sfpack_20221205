@@ -8,7 +8,7 @@
     <img src="{{ asset('build/images/' ~ movie.poster) }}" />
     <ul>
         <li><strong>Released at: </strong>{{ movie.released|format_date('full') }}</li>
-        <li><strong>Genres: </strong> - </li>
+        <li><strong>Genres: </strong>{{ movie.genreNames|join(', ') }}</li>
     </ul>
 </div>
 {% endblock %}
