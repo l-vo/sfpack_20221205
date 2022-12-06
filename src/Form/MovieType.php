@@ -7,6 +7,7 @@ use App\Entity\Movie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,10 @@ class MovieType extends AbstractType
             ->add('released', DateType::class, [
                 'widget' => 'single_text',
             ])
-            ->add('price')
+            ->add('price', NumberType::class, [
+                'html5' => true,
+                'scale' => 2,
+            ])
             ->add('slug')
             ->add('genres', EntityType::class, [
                 'class' => Genre::class,
