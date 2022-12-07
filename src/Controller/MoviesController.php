@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Api\OmdbConsumer;
 use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,11 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class MoviesController extends AbstractController
 {
     #[Route('/movies/{slug<[a-z0-9-]+>}', name: 'app_movies', methods: ['GET'], priority: -100)]
-    public function movieDetail(string $slug, MovieRepository $movieRepository): Response
+    public function movieDetail(string $slug, MovieRepository $movieRepository, OmdbConsumer $omdbConsumer): Response
     {
-        $movie = $movieRepository->findOneBySlug($slug);
-        if (null === $movie) {
-            throw $this->createNotFoundException();
+        try {
+            $movie = $omdbConsumer->get($slug);
+        } catch (ClientException) {
+            $movie = $movieRepository->findOneBySlug($slug);
+            if (null === $movie) {
+                throw $this->createNotFoundException();
+            }
         }
 
         return $this->render('movies/index.html.twig', [
