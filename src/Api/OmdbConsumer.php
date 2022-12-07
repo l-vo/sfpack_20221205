@@ -12,21 +12,25 @@ final class OmdbConsumer
     {
     }
 
-    public function get(string $movieId): MovieDto
+    public function getById(string $movieId): array
     {
-        $response = $this->omdbClient->request('GET', '/', ['query' => ['i' => $movieId]]);
+        return $this->getByCriteria('i', $movieId);
+    }
+
+    public function getByTitle(string $movieTitle): array
+    {
+        return $this->getByCriteria('t', $movieTitle);
+    }
+
+    private function getByCriteria(string $criteria, string $value): array
+    {
+        $response = $this->omdbClient->request('GET', '/', ['query' => [$criteria => $value]]);
         $data = $response->toArray();
 
         if (!isset($data['Title'])) {
             throw new ClientException($response);
         }
 
-        return new MovieDto(
-            $data['Title'],
-            $data['Poster'],
-            $data['Country'],
-            explode(', ', $data['Genre']),
-            new \DateTimeImmutable($data['Released']),
-        );
+        return $data;
     }
 }

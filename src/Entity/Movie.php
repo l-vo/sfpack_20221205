@@ -29,17 +29,15 @@ class Movie
     #[Assert\Length(max: 255)]
     private ?string $poster = null;
 
-    #[ORM\Column(length: 2)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Country]
     private ?string $country = null;
 
     #[ORM\Column]
     #[Assert\NotBlank]
     private ?\DateTimeImmutable $released = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
-    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2, nullable: true)]
     #[Assert\Range(min: 1, max: 50)]
     private ?string $price = null;
 
@@ -114,7 +112,7 @@ class Movie
         return $this->price;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(?string $price): self
     {
         $this->price = $price;
 

@@ -15,7 +15,7 @@
         <li><strong>Released at: </strong>{{ movie.released|format_date('full') }}</li>
         <li><strong>Genres: </strong>{{ movie.genreNames|join(', ') }}</li>
         <li><strong>Country: </strong>{{ movie.country|country_name }}</li>
-        {% if movie.price is defined %}
+        {% if movie.price is not null %}
         <li><strong>Price: </strong>{{ movie.price|format_number({fraction_digit: 2}) }} €</li>
         {% endif %}
     </ul>
