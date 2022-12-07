@@ -99,7 +99,9 @@ class MoviesImportCommand extends Command
             $rows[] = [$data['imdbID'], $movie->getId(), $data['Title'], $data['Rated']];
         }
 
-        $io->success('Movies inserted !');
+        if (count($rows) > 0) {
+            $io->success('Movies inserted !');
+        }
 
         $io->table(
             ['Id in api', 'Id in database', 'Title', 'Rated'],
