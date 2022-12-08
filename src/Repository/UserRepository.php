@@ -21,6 +21,17 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findAllAdmins(): array
+    {
+        return $this
+            ->createQueryBuilder('u')
+            ->where('u.roles LIKE :admin')
+            ->setParameter('admin', '%ADMIN%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

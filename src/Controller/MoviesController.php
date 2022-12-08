@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Api\OmdbConsumer;
 use App\Entity\Movie;
 use App\Form\MovieType;
+use App\MovieOrderedEvent;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MoviesController extends AbstractController
 {
@@ -47,5 +49,13 @@ class MoviesController extends AbstractController
     public function allMovies(MovieRepository $movieRepository): Response
     {
         return $this->render('movies/all.html.twig', ['movies' => $movieRepository->findAll()]);
+    }
+
+    #[Route('/movie/ordered/{slug<[a-zA-Z0-9-]+>}', name: 'app_movie_ordered', methods: ['GET'])]
+    public function movieOrdered(Movie $movie, EventDispatcherInterface $eventDispatcher): Response
+    {
+        $eventDispatcher->dispatch(new MovieOrderedEvent($movie));
+
+        return new Response(sprintf('<body><h1>Movie "%s" ordered !</h1></body>', $movie->getTitle()));
     }
 }

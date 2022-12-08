@@ -22,7 +22,9 @@
 
         {% if app.user %}
         <br />
-        <button class="btn btn-primary" {% if not is_granted('ORDER_MOVIE', movie) %}disabled="disabled"{% endif %}>Order movie</button>
+        <a href="{{ path('app_movie_ordered', {slug: movie.slug}) }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
+            Order movie
+        </a>
         {% endif %}
     </ul>
 </div>
