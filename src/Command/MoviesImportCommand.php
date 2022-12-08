@@ -80,6 +80,7 @@ class MoviesImportCommand extends Command
                 ->setReleased(new \DateTimeImmutable($data['Released']))
                 ->setPoster($data['Poster'])
                 ->setCountry($data['Country'])
+                ->setRated($data['Rated'])
             ;
 
             foreach (explode(', ', $data['Genre']) as $genreName) {

@@ -18,6 +18,7 @@ class MovieFixtures extends Fixture
         $movie->setCountry('FR');
         $movie->setPrice('15.90');
         $movie->addGenre($this->getReference('genre-thriller'));
+        $movie->setRated('NC-17');
         $manager->persist($movie);
 
         $movie = new Movie();
@@ -28,6 +29,7 @@ class MovieFixtures extends Fixture
         $movie->setCountry('FR');
         $movie->setPrice('17.90');
         $movie->addGenre($this->getReference('genre-concert'));
+        $movie->setRated('G');
         $manager->persist($movie);
 
         $movie = new Movie();
@@ -39,6 +41,7 @@ class MovieFixtures extends Fixture
         $movie->setPrice('13.90');
         $movie->addGenre($this->getReference('genre-drama'));
         $movie->addGenre($this->getReference('genre-romance'));
+        $movie->setRated('G');
         $manager->persist($movie);
 
         $manager->flush();

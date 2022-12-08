@@ -91,4 +91,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isOlderThan(int $age, \DateTimeInterface $now) : bool
+    {
+        return $now->diff($this->birthdate)->y >= $age;
+    }
 }

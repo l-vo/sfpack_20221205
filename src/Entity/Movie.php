@@ -49,6 +49,11 @@ class Movie
     #[Assert\Count(min: 1)]
     private Collection $genres;
 
+    #[ORM\Column(length: 5)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 5)]
+    private ?string $rated = null;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
@@ -158,5 +163,17 @@ class Movie
     public function getGenreNames(): Collection
     {
         return $this->genres->map(static fn(Genre $genre): string => $genre->getName());
+    }
+
+    public function getRated(): ?string
+    {
+        return $this->rated;
+    }
+
+    public function setRated(string $rated): self
+    {
+        $this->rated = $rated;
+
+        return $this;
     }
 }

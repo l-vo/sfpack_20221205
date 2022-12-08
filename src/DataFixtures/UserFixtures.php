@@ -33,6 +33,15 @@ final class UserFixtures extends Fixture
         );
         $manager->persist($child);
 
+        $teen = (new User())
+            ->setUsername('teen_user')
+            ->setBirthdate(new \DateTimeImmutable('2006-11-14'))
+        ;
+        $teen->setPassword(
+            $this->passwordHasherFactory->getPasswordHasher($teen)->hash('pass'),
+        );
+        $manager->persist($teen);
+
         $manager->flush();
     }
 }

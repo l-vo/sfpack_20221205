@@ -15,8 +15,14 @@
         <li><strong>Released at: </strong>{{ movie.released|format_date('full') }}</li>
         <li><strong>Genres: </strong>{{ movie.genreNames|join(', ') }}</li>
         <li><strong>Country: </strong>{{ movie.country|country_name }}</li>
+        <li><strong>Rated: </strong>{{ movie.rated }}</li>
         {% if movie.price is not null %}
         <li><strong>Price: </strong>{{ movie.price|format_number({fraction_digit: 2}) }} €</li>
+        {% endif %}
+
+        {% if app.user %}
+        <br />
+        <button class="btn btn-primary" {% if not is_granted('ORDER_MOVIE', movie) %}disabled="disabled"{% endif %}>Order movie</button>
         {% endif %}
     </ul>
 </div>

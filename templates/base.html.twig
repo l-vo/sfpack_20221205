@@ -18,6 +18,8 @@
         {{ render(controller('App\\Controller\\NavBarController::index')) }}
         {% if app.user %}
             <a href="{{ logout_url() }}">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
         {% endif %}
 
         {% block body %}{% endblock %}
