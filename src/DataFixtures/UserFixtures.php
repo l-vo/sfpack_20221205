@@ -33,6 +33,17 @@ final class UserFixtures extends Fixture
         );
         $manager->persist($child);
 
+        $admin = (new User())
+            ->setUsername('admin')
+            ->setBirthdate(new \DateTimeImmutable('1979-07-29'))
+            ->setRoles(['ROLE_ADMIN'])
+        ;
+        $admin->setPassword(
+            $this->passwordHasherFactory->getPasswordHasher($child)->hash('pass'),
+        );
+        $manager->persist($admin);
+
+
         $manager->flush();
     }
 }
