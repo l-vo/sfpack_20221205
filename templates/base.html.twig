@@ -16,6 +16,9 @@
     </head>
     <body>
         {{ render(controller('App\\Controller\\NavBarController::index')) }}
+        {% if app.user %}
+            <a href="{{ logout_url() }}">Logout</a>
+        {% endif %}
 
         {% block body %}{% endblock %}
     </body>
