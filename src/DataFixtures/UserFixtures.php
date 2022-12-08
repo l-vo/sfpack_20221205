@@ -42,6 +42,16 @@ final class UserFixtures extends Fixture
         );
         $manager->persist($teen);
 
+        $admin = (new User())
+            ->setUsername('admin')
+            ->setBirthdate(new \DateTimeImmutable('1985-12-11'))
+        ;
+        $admin->setPassword(
+            $this->passwordHasherFactory->getPasswordHasher($admin)->hash('pass'),
+        );
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
         $manager->flush();
     }
 }

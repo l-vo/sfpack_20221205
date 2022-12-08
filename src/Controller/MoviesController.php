@@ -42,4 +42,10 @@ class MoviesController extends AbstractController
 
         return $this->render('movies/add.html.twig', ['form' => $form]);
     }
+
+    #[Route('/admin/movies/all', name: 'app_movies_all', methods: ['GET'])]
+    public function allMovies(MovieRepository $movieRepository): Response
+    {
+        return $this->render('movies/all.html.twig', ['movies' => $movieRepository->findAll()]);
+    }
 }

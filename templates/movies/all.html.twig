@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Movies{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>All movies</h1>
+    <table>
+        <tbody>
+        {% for movie in movies %}
+            <tr>
+                <td>{{ movie.title }}</td>
+                <td>{% if movie.price is not null %}{{ movie.price|format_number({fraction_digit: 2}) }} €{% endif %}</td>
+                <td>{{ movie.country|country_name }}</td>
+                <td>{{ movie.rated }}</td>
+                <td>{{ movie.released|format_date('short') }}</td>
+                <td>{{ movie.genreNames|join(', ') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <ul>
+
+    </ul>
+</div>
+{% endblock %}
